@@ -1,0 +1,26 @@
+# --- secrets: real configs stay on the servers; copy the *.example.php files and fill them in
+/application/config/config.php
+/application/config/config___.php
+/application/config/database.php
+/application/config/__database.php
+
+# --- uploaded content (PDFs, images, student photos): lives on the server, not in git; keep the folders
+/uploads/**
+!/uploads/**/
+!/uploads/**/index.html
+
+# --- server / runtime noise
+error_log
+.htaccess.lock-*
+/temp/*
+!/temp/index.html
+/application/logs/*
+!/application/logs/index.html
+/application/cache/*
+!/application/cache/index.html
+Thumbs.db
+desktop.ini
+*.zip
+
+# --- theme demo file with the theme vendor's Mapbox token (not used by the site)
+/new_theme/assets/js/app-logistics-fleet.js

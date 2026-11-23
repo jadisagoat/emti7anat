@@ -1,0 +1,15 @@
+# Deny access to sensitive files
+<FilesMatch "^(\.env|\.git|\.htaccess|\.htpasswd|\.DS_Store|.*\.bak|.*\.ini|.*\.log)$">
+    Require all denied
+</FilesMatch>
+
+# Block directory listings; no MultiViews so /about reaches CodeIgniter instead of the old about.html
+Options -Indexes -MultiViews
+
+# CodeIgniter URL Rewriting
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php/$1 [L]
+
+ 

@@ -1,0 +1,24 @@
+/* Back office: Arabic (RTL) screens of the practice-test modules (tests, questions, members, reports). */
+.pt-ar { direction: rtl; text-align: right; }
+.pt-ar .breadcrumb .pull-right { float: left; }
+.pt-ar .breadcrumb > li { text-shadow: none; }
+.pt-ar table th, .pt-ar table td { text-align: right; }
+.pt-ar .pt-actions-cell { text-align: left !important; white-space: nowrap; }
+.pt-ar .help-inline { padding-right: 8px; }
+.pt-ar .help-block { margin-top: 4px; }
+.pt-ar .align-right { text-align: left; }
+.pt-ar label.checkbox, .pt-ar label.radio { padding-right: 20px; padding-left: 0; }
+.pt-ar label.checkbox input, .pt-ar label.radio input { margin-right: -20px; margin-left: 0; float: right; }
+.pt-ar .input-append { direction: ltr; display: inline-block; }
+.pt-ar .input-append input { direction: ltr; }
+.pt-ar input.input-small, .pt-ar input.input-mini { direction: ltr; text-align: left; }
+.pt-ar .field-title { font-weight: 600; margin-top: 10px; display: block; }
+.pt-ar .middle-forms label { display: block; }
+.pt-ar fieldset legend { text-align: right; }
+.pt-ar .pt-filter label { margin: 0 0 8px 10px; }
+.pt-ar .pt-stats a { float: right; margin: 0 0 8px 12px; }
+.pt-ar .pt-stats small:after { content: " \25C2"; }
+.pt-ar .modal-header .close { float: left; }
+.pt-ar .modal-footer { text-align: left; }
+.pt-ar .label { display: inline-block; }
+.pt-ar .muted, .pt-ar small { color: #777; }

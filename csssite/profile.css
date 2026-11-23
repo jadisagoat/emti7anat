@@ -1,0 +1,100 @@
+/* =====================================================================
+   Student profile (/profile) and the per-attempt answers table
+   (also used by the end-of-test screen). Uses the theme variables of gravity.css.
+   ===================================================================== */
+.mp { display: grid; grid-template-columns: minmax(0, 1fr); gap: 20px; }
+.mp > * { min-width: 0; }   /* wide tables scroll inside their card instead of stretching the page */
+.mp-card {
+  background: var(--g-card, #fff);
+  border: 1px solid var(--g-line, #e3e7ef);
+  border-radius: var(--g-radius, 18px);
+  box-shadow: var(--g-shadow, 0 10px 30px -12px rgba(16, 24, 40, .14));
+  padding: 26px 28px;
+}
+.mp-card h3 {
+  margin: 0 0 18px; padding: 0 0 14px; border-bottom: 1px solid var(--g-line, #e3e7ef);
+  font-family: var(--g-display, inherit); font-size: 20px; font-weight: 700; color: var(--g-text, #161c2b);
+}
+
+/* header */
+.mp-head { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
+.mp-head h3 { border: 0; padding: 0; margin: 0 0 6px; font-size: 24px; }
+.mp-avatar {
+  flex: 0 0 64px; width: 64px; height: 64px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  background: linear-gradient(135deg, var(--g-red, #e21737), #ff6a3d); color: #fff;
+  font-family: var(--g-display, inherit); font-size: 28px; font-weight: 700;
+}
+.mp-who { flex: 1 1 280px; min-width: 0; }
+.mp-meta { display: flex; flex-wrap: wrap; gap: 6px 18px; color: var(--g-muted, #5f6b80); font-size: 14px; }
+.mp-meta b { color: var(--g-text, #161c2b); font-weight: 600; }
+.mp-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+.mp-actions .pt-link-btn { margin: 0; }
+
+/* counters */
+.mp-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 14px; }
+.mp-stat {
+  background: var(--g-card, #fff); border: 1px solid var(--g-line, #e3e7ef); border-radius: 14px;
+  padding: 16px 18px; box-shadow: var(--g-shadow, none);
+}
+.mp-stat b { display: block; font-family: var(--g-display, inherit); font-size: 28px; line-height: 1.1; color: var(--g-text, #161c2b); }
+.mp-stat span { display: block; margin-top: 4px; color: var(--g-muted, #5f6b80); font-size: 13.5px; font-weight: 600; }
+.mp-stat.is-pass b { color: var(--g-green, #12805c); }
+.mp-stat.is-fail b { color: var(--g-red, #e21737); }
+.mp-stat.is-open b { color: #c27a00; }
+
+/* tables */
+.mp-scroll, .pa-scroll { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.mp-table { width: 100%; border-collapse: collapse; }
+.mp-table th {
+  text-align: left; padding: 10px 12px; color: var(--g-muted, #5f6b80); font-weight: 600; font-size: 13.5px;
+  border-bottom: 2px solid var(--g-line, #e3e7ef); white-space: nowrap;
+}
+.mp-table td { padding: 12px; border-bottom: 1px solid var(--g-line, #e3e7ef); vertical-align: middle; font-size: 14.5px; color: var(--g-text, #161c2b); }
+.mp-table td small { display: block; margin-top: 2px; color: var(--g-muted, #5f6b80); font-size: 12.5px; }
+.mp-table td small.mp-warn { color: var(--g-red, #e21737); }
+.mp-table tr:last-child td { border-bottom: 0; }
+.mp-table .mp-go { text-align: right; white-space: nowrap; }
+.mp-table .mp-go a { font-weight: 700; color: var(--g-blue, #0b648f); }
+.mp-history .pt-grade { min-width: 26px; }
+.mp-answers > td { background: var(--g-bg, #f3f5fa); padding: 14px !important; }
+.mp-badge { display: inline-block; padding: 3px 10px; border-radius: 999px; font-size: 12.5px; font-weight: 700; white-space: nowrap; }
+.mp-badge.is-pass { background: var(--g-green-soft, #e8f7f0); color: var(--g-green, #12805c); }
+.mp-badge.is-fail { background: var(--g-red-soft, #fdebee); color: var(--g-red, #e21737); }
+.mp-badge.is-open { background: #fff4e5; color: #a05a00; }
+.mp-toggle {
+  font: inherit; font-size: 13.5px; font-weight: 700; cursor: pointer;
+  padding: 7px 14px; border-radius: 10px; border: 1.5px solid var(--g-blue, #0b648f);
+  background: #fff; color: var(--g-blue, #0b648f);
+}
+.mp-toggle[aria-expanded="true"] { background: var(--g-blue, #0b648f); color: #fff; }
+.mp-toggle:focus-visible { outline: 3px solid rgba(11, 100, 143, .35); outline-offset: 2px; }
+.mp-empty { margin: 0; color: var(--g-muted, #5f6b80); }
+.mp-empty a { font-weight: 700; }
+.mp-legend { margin: 14px 0 0; color: var(--g-muted, #5f6b80); font-size: 13px; }
+.mp-legend .pt-grade { min-width: 22px; padding: 0 6px; font-size: 12px; }
+
+/* answers of one attempt (one column per attempt) */
+.pa-table { width: 100%; border-collapse: collapse; background: #fff; border: 1px solid var(--g-line, #e3e7ef); border-radius: 12px; overflow: hidden; }
+.pa-table th { background: var(--g-bg, #f3f5fa); color: var(--g-muted, #5f6b80); font-weight: 600; font-size: 13px; text-align: left; padding: 9px 12px; white-space: nowrap; }
+.pa-table td { padding: 9px 12px; border-top: 1px solid var(--g-line, #e3e7ef); font-size: 14px; vertical-align: middle; }
+.pa-table .pa-n { color: var(--g-muted, #5f6b80); width: 32px; }
+.pa-table .pa-q { min-width: 200px; color: var(--g-text, #161c2b); }
+.pa-table .pa-g { white-space: nowrap; }
+.pa-table .pa-g small { color: var(--g-muted, #5f6b80); font-weight: 600; }
+.pa-ans { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 8px; background: var(--g-bg, #f3f5fa); white-space: nowrap; }
+.pa-ans i { font-style: normal; font-weight: 800; }
+.pa-ans.is-right { background: var(--g-green-soft, #e8f7f0); color: var(--g-green, #12805c); }
+.pa-ans.is-wrong { background: var(--g-red-soft, #fdebee); color: var(--g-red, #e21737); }
+.pa-ans.is-wrong bdi { text-decoration: line-through; text-decoration-thickness: 1px; }
+.pa-ans.is-key { background: var(--g-blue-soft, #e7f2f8); color: var(--g-blue, #0b648f); font-weight: 600; }
+.pa-none { color: var(--g-muted, #5f6b80); font-style: italic; }
+.pa-empty { margin: 0; color: var(--g-muted, #5f6b80); }
+
+@media (max-width: 575px) {
+  .mp-card { padding: 18px 16px; }
+  .mp-head { align-items: flex-start; }
+  .mp-actions { width: 100%; }
+  .mp-actions .pt-link-btn { flex: 1 1 auto; text-align: center; }
+  .mp-stat b { font-size: 24px; }
+}
