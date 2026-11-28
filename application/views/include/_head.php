@@ -52,7 +52,7 @@ $og_image = $og_base . 'images/og-share.jpg?v=1';
 <script src="<?=base_url()?>menu/script.js"></script>
 <!-- Custom Theme files -->
 <!--theme-style: gravity.css replaces menu/styles.css + csssite/style1.css (old files kept on disk)-->
-<link href="<?=base_url()?>csssite/gravity.css?v=4" rel="stylesheet" type="text/css" media="all" />
+<link href="<?=base_url()?>csssite/gravity.css?v=5" rel="stylesheet" type="text/css" media="all" />
 <!--//theme-style-->
 <!-- practice tests (interactive MCQ) -->
 <script>window.GRAVITY_BASE = "<?=base_url()?>";</script>

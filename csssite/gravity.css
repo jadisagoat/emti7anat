@@ -1567,3 +1567,32 @@ body.pt-no-scroll { overflow: hidden; }
   #bodycontainer .sim-card { padding: 14px 16px; }
   #bodycontainer .sim-body iframe { min-height: 280px; }
 }
+
+/* ---------------------------------------------------------------------
+   Embedded interactive lab (a whole web page pasted in a description): own frame + "Full screen" button
+   --------------------------------------------------------------------- */
+.lab-embed {
+  display: flex; flex-direction: column; margin: 14px 0 0;
+  border: 1px solid #22304f; border-radius: 12px; overflow: hidden; background: #07090f;
+}
+.lab-embed .lab-bar {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 8px 10px 8px 14px; background: #0d1322; color: #e8eefb;
+}
+.lab-embed .lab-name { font: 600 14px/1.2 var(--g-display); letter-spacing: .04em; }
+.lab-embed .lab-fs {
+  min-height: 36px; padding: 6px 14px 6px 36px; border: 0; border-radius: 8px; cursor: pointer;
+  font: 600 14px/1.2 var(--g-display); color: #fff;
+  background: #3d8bff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5'/%3E%3C/svg%3E") 11px center / 17px no-repeat;
+}
+.lab-embed .lab-fs:hover { background-color: #2f74e0; }
+.lab-embed .lab-fs:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+.lab-embed iframe { display: block; flex: 1 1 auto; width: 100%; height: 80vh; min-height: 520px; border: 0; background: #07090f; }
+.lab-embed.is-full { position: fixed; inset: 0; z-index: 2147483000; margin: 0; border: 0; border-radius: 0; }
+.lab-embed.is-full iframe { height: auto; min-height: 0; }
+.lab-embed:fullscreen { width: 100%; height: 100%; }
+.lab-embed:-webkit-full-screen { width: 100%; height: 100%; }
+body.lab-lock { overflow: hidden; }
+@media (max-width: 575px) {
+  .lab-embed iframe { height: 70vh; min-height: 420px; }
+}

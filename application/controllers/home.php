@@ -59,6 +59,62 @@ class Home extends CI_Controller {
         $this->load->view('template',$data);
     }
 
+    /* A description that contains a whole pasted web page (<!DOCTYPE html> ... </html>, e.g. an interactive lab)
+       is shown inside its own frame with a "Full screen" button, so the page keeps its own styles
+       and the site styles are not affected by it. Other content is returned unchanged. */
+    private function _embed_docs($html)
+    {
+        $html=(string)$html;
+        $out='';
+        $found=false;
+        $pos=0;
+        while(true){
+            $a=stripos($html,'<!doctype html',$pos);
+            $b=stripos($html,'<html',$pos);
+            if($a===false) $start=$b;
+            else if($b===false) $start=$a;
+            else $start=min($a,$b);
+            if($start===false) break;
+            $end=stripos($html,'</html>',$start);
+            if($end===false) break;
+            $end+=7;
+            $doc=substr($html,$start,$end-$start);
+            $doc=str_replace(array('&','"'),array('&amp;','&quot;'),$doc);
+            $out.=substr($html,$pos,$start-$pos);
+            $out.='<div class="lab-embed"><div class="lab-bar"><span class="lab-name">Interactive lab</span>'
+                .'<button type="button" class="lab-fs" onclick="labFullscreen(this)">Full screen</button></div>'
+                .'<iframe srcdoc="'.$doc.'" allowfullscreen title="Interactive lab"></iframe></div>';
+            $pos=$end;
+            $found=true;
+        }
+        if(!$found) return $html;
+        $out.=substr($html,$pos);
+        $out.='<script>
+if(!window.labFullscreen){
+window.labFullscreen=function(btn){
+  var w=$(btn).closest(".lab-embed")[0]; if(!w) return;
+  var fsEl=document.fullscreenElement||document.webkitFullscreenElement;
+  if(!$(w).hasClass("is-full")){
+    $(w).addClass("is-full"); $("body").addClass("lab-lock"); $(btn).text("Exit full screen");
+    var req=w.requestFullscreen||w.webkitRequestFullscreen;
+    if(req){ try{ var p=req.call(w); if(p&&p["catch"]) p["catch"](function(){}); }catch(e){} }
+  }else{
+    $(w).removeClass("is-full"); $("body").removeClass("lab-lock"); $(btn).text("Full screen");
+    var ex=document.exitFullscreen||document.webkitExitFullscreen;
+    if(fsEl&&ex){ try{ ex.call(document); }catch(e){} }
+  }
+};
+$(document).on("fullscreenchange webkitfullscreenchange",function(){
+  if(!(document.fullscreenElement||document.webkitFullscreenElement)){
+    $(".lab-embed.is-full").removeClass("is-full").find(".lab-fs").text("Full screen");
+    $("body").removeClass("lab-lock");
+  }
+});
+}
+</script>';
+        return $out;
+    }
+
     public function unit()
     {
         $data["id_classes"]=(int)$this->input->post("id_classes");
@@ -100,7 +156,7 @@ class Home extends CI_Controller {
             $sim=preg_replace('/<a(?=[[:space:]])(?![^>]*target=)/i','<a target="_blank" rel="noopener"',$sim);
             $sim_html='<div class="col-md-12"><section class="sim-card" aria-labelledby="sim-title">
 <div class="sim-head"><span class="sim-icon" aria-hidden="true"></span><h4 id="sim-title">Simulations</h4></div>
-<div class="sim-body">'.$sim.'</div>
+<div class="sim-body">'.$this->_embed_docs($sim).'</div>
 </section></div>';
         }
 
@@ -363,7 +419,7 @@ class Home extends CI_Controller {
                 echo '<div class="title" ><a href="'.base_url().'uploads/summary/'.$section1['file_pdf'].'"  target="_blank" >Summary</a></div>';
             }else
                 echo '<div class="title" >'.$section1['title'].'</div>';
-            echo '<div style="margin: 10px 0 40px;color:#000">'.$section1['description'].'</div>';
+            echo '<div style="margin: 10px 0 40px;color:#000">'.$this->_embed_docs($section1['description']).'</div>';
 
         }
 
@@ -423,7 +479,7 @@ echo '<li>
         if(count($questions_from_exams)){ echo '</ul>
 '; }
         if(count($questions_from_exams))
-            echo '<div style="margin: 10px 0 40px;color:#000">'.$questions_from_exams1['description'].'</div>';
+            echo '<div style="margin: 10px 0 40px;color:#000">'.$this->_embed_docs($questions_from_exams1['description']).'</div>';
 
 //session problem
         if($data["id_language"])
